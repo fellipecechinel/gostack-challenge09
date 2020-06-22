@@ -4,20 +4,10 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  ValueTransformer,
   OneToMany,
 } from 'typeorm';
 
 import OrdersProducts from '@modules/orders/infra/typeorm/entities/OrdersProducts';
-
-const columnNumericTransformer: ValueTransformer = {
-  from: (data?: string | null) => {
-    return data ? parseFloat(data) : null;
-  },
-  to: (data?: number | null) => {
-    return data || null;
-  },
-};
 
 @Entity('products')
 class Product {
@@ -27,9 +17,7 @@ class Product {
   @Column()
   name: string;
 
-  @Column('numeric', {
-    transformer: columnNumericTransformer,
-  })
+  @Column('numeric')
   price: number;
 
   @Column('integer')

@@ -5,21 +5,11 @@ import {
   UpdateDateColumn,
   JoinColumn,
   PrimaryGeneratedColumn,
-  ValueTransformer,
   ManyToOne,
 } from 'typeorm';
 
 import Order from '@modules/orders/infra/typeorm/entities/Order';
 import Product from '@modules/products/infra/typeorm/entities/Product';
-
-const columnNumericTransformer: ValueTransformer = {
-  from: (data?: string | null) => {
-    return data ? parseFloat(data) : null;
-  },
-  to: (data?: number | null) => {
-    return data || null;
-  },
-};
 
 @Entity('orders_products')
 class OrdersProducts {
@@ -40,9 +30,7 @@ class OrdersProducts {
   @Column()
   order_id: string;
 
-  @Column('numeric', {
-    transformer: columnNumericTransformer,
-  })
+  @Column('numeric')
   price: number;
 
   @Column('integer')
